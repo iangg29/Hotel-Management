@@ -16,7 +16,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "modules/Firebase.h"
+#include "modules/MongoDB.h"
 #include "modules/Utilities.h"
 
 using namespace std;
@@ -36,18 +36,25 @@ public:
     App(string name, bool debug, float version);
 
     string getName();
+
     string getAuthor();
+
     float getVersion();
+
     vector<Module> getModules();
 
     bool isDebug();
+
     bool isStarted();
 
     void setStarted(bool started);
+
     void addModule(Module &module);
 
     void start();
+
     void end();
+
     void launchConsole();
 };
 
@@ -89,8 +96,8 @@ void App::start() {
         setStarted(true);
         if (isDebug()) cout << "Loading modules..." << endl;
         Utilities utilities("Utilities Manager", ModuleType::INFO);
-        Firebase firebase("Firebase Manager", ModuleType::DATA);
-        addModule(firebase);
+        MongoDB mongoDb("MongoDB Manager", ModuleType::DATA);
+        addModule(mongoDb);
         addModule(utilities);
         // TODO: Complete modules.
         cout << "La aplicación ha iniciado correctamente." << endl;
