@@ -16,7 +16,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "modules/MongoDB.h"
+#include "modules/MySQL.h"
 #include "modules/Utilities.h"
 
 using namespace std;
@@ -29,6 +29,7 @@ private:
     bool started;
     float version;
     vector<Module> modules;
+    MySQL mongoDB;
 
     void menu();
 
@@ -40,6 +41,8 @@ public:
     string getAuthor();
 
     float getVersion();
+
+    MySQL getMongoDB();
 
     vector<Module> getModules();
 
@@ -58,12 +61,13 @@ public:
     void launchConsole();
 };
 
-App::App(string name, bool debug, float version) {
+App::App(string name, bool debug, float version) : mongoDB("MySQL Manager", ModuleType::DATA) {
     this->name = name;
     this->debug = debug;
     this->version = version;
     this->author = "Ian García";
     this->started = false;
+    addModule(mongoDB);
 }
 
 string App::getName() {
@@ -96,8 +100,6 @@ void App::start() {
         setStarted(true);
         if (isDebug()) cout << "Loading modules..." << endl;
         Utilities utilities("Utilities Manager", ModuleType::INFO);
-        MongoDB mongoDb("MongoDB Manager", ModuleType::DATA);
-        addModule(mongoDb);
         addModule(utilities);
         // TODO: Complete modules.
         cout << "La aplicación ha iniciado correctamente." << endl;
@@ -111,6 +113,9 @@ void App::end() {
     if (isStarted()) {
         setStarted(false);
         // TODO: Clear cache.
+        for(Module module : getModules()){
+            module.end();
+        }
         delete this;
         cout << "La aplicación se ha cerrado correctamente." << endl;
     }
@@ -149,6 +154,10 @@ void App::menu() {
     cout << "2. Reservaciones confirmadas" << endl;
     cout << "3. Habitaciones disponibles" << endl;
     cout << "4. Salir" << endl;
+}
+
+MySQL App::getMongoDB() {
+    return this->mongoDB;
 }
 
 
