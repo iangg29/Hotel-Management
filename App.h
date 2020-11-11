@@ -36,25 +36,18 @@ public:
     App(string name, bool debug, float version);
 
     string getName();
-
     string getAuthor();
-
-    bool isDebug();
-
-    bool isStarted();
-
     float getVersion();
-
     vector<Module> getModules();
 
-    void setStarted(bool started);
+    bool isDebug();
+    bool isStarted();
 
+    void setStarted(bool started);
     void addModule(Module &module);
 
     void start();
-
     void end();
-
     void launchConsole();
 };
 
