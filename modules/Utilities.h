@@ -17,6 +17,12 @@
 #include <string>
 #include "../Module.h"
 
+/*
+ * Utilities: Módulo que contiene métodos de utilidad para la aplicación.
+ * @file Utilities.h
+ * @author Ian
+ * */
+
 using namespace std;
 
 class Utilities : public Module {
@@ -24,6 +30,11 @@ public:
     Utilities(string name, ModuleType type);
 };
 
+/**
+ * Constructor del módulo.
+ * @param name Nombre del módulo.
+ * @param type Tipo del módulo.
+ */
 Utilities::Utilities(string name, ModuleType type) : Module(name, type) {}
 
 

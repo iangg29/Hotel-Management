@@ -12,8 +12,11 @@
 
 #include "App.h"
 
+/*
+ *  Método inicial de la aplicación
+ *  Crea la instancia principal y la inicia.
+ * */
 int main() {
-
     App app("Hotel Management System", true, 0.1);
     app.start();
     return 0;

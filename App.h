@@ -16,8 +16,14 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "modules/MongoDB.h"
+#include "modules/MySQL.h"
 #include "modules/Utilities.h"
+
+/*
+ * App: Clase principal de la aplicación donde se manejan los módulos y controladores.
+ * @file App.h
+ * @author Ian
+ * */
 
 using namespace std;
 
@@ -29,6 +35,7 @@ private:
     bool started;
     float version;
     vector<Module> modules;
+    MySQL mySQL;
 
     void menu();
 
@@ -40,6 +47,8 @@ public:
     string getAuthor();
 
     float getVersion();
+
+    MySQL getMongoDB();
 
     vector<Module> getModules();
 
@@ -58,46 +67,78 @@ public:
     void launchConsole();
 };
 
-App::App(string name, bool debug, float version) {
+/**
+ * Constructor de la aplicación principal.
+ * @param name Nombre de la aplicación.
+ * @param debug Modo debug.
+ * @param version Versión de la aplicación.
+ */
+App::App(string name, bool debug, float version) : mySQL("MySQL Manager", ModuleType::DATA) {
     this->name = name;
     this->debug = debug;
     this->version = version;
     this->author = "Ian García";
     this->started = false;
+    addModule(mySQL);
 }
 
+/**
+ * Obtiene nombre de la app.
+ * @return Nombre de la aplicación.
+ */
 string App::getName() {
     return this->name;
 }
 
+/**
+ * Obtiene nombre del autor de la app.
+ * @return Autor de la aplicación.
+ */
 string App::getAuthor() {
     return this->author;
 }
 
+/**
+ * Revisa si el modo debug está encendido.
+ * @return Modo debug encendido o no.
+ */
 bool App::isDebug() {
     return this->debug;
 }
 
+/**
+ * Obtiene versión de la app.
+ * @return Versión de la aplicación.
+ */
 float App::getVersion() {
     return this->version;
 }
 
+/**
+ * Revisa si la aplicación ya fué iniciada.
+ * @return Aplicación iniciada.
+ */
 bool App::isStarted() {
     return this->started;
 }
 
+/**
+ * Asigna si la aplicación ya fué iniciada.
+ * @param started Ya fué iniciada la aplicación.
+ */
 void App::setStarted(bool started) {
     this->started = started;
 }
 
+/**
+ * Método principal para iniciar la aplicación.
+ */
 void App::start() {
     if (!isStarted()) {
         // TODO: Start handle.
         setStarted(true);
         if (isDebug()) cout << "Loading modules..." << endl;
         Utilities utilities("Utilities Manager", ModuleType::INFO);
-        MongoDB mongoDb("MongoDB Manager", ModuleType::DATA);
-        addModule(mongoDb);
         addModule(utilities);
         // TODO: Complete modules.
         cout << "La aplicación ha iniciado correctamente." << endl;
@@ -107,23 +148,41 @@ void App::start() {
     }
 }
 
+/**
+ * Método para terminal y cerrar la aplicación.
+ * Limpia cache y vacia datos.
+ */
 void App::end() {
     if (isStarted()) {
         setStarted(false);
         // TODO: Clear cache.
+        for (Module module : getModules()) {
+            module.end();
+        }
         delete this;
         cout << "La aplicación se ha cerrado correctamente." << endl;
     }
 }
 
+/**
+ * Obtiene módulos registrados.
+ * @return Vector con los métodos registrados en la aplicación.
+ */
 vector<Module> App::getModules() {
     return this->modules;
 }
 
+/**
+ * Método para registrar módulo.
+ * @param module Módulo a registrar en la aplicación.
+ */
 void App::addModule(Module &module) {
     getModules().push_back(module);
 }
 
+/**
+ * Método para iniciar la conversación app - usuario.
+ */
 void App::launchConsole() {
     int opcion = 0;
     while (isStarted()) {
@@ -144,11 +203,22 @@ void App::launchConsole() {
     }
 }
 
+/**
+ * Método para mandar al usuario las opciones posibles dentro de la aplicación.
+ */
 void App::menu() {
     cout << "1. Hacer reservación" << endl;
     cout << "2. Reservaciones confirmadas" << endl;
     cout << "3. Habitaciones disponibles" << endl;
     cout << "4. Salir" << endl;
+}
+
+/**
+ * Obtiene el módulo principal para la base de datos.
+ * @return Módulo SQL.
+ */
+MySQL App::getMongoDB() {
+    return this->mySQL;
 }
 
 
