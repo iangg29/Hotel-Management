@@ -16,8 +16,19 @@
 #include <iostream>
 #include <string>
 
+/*
+ * Module: Clase base para cada módulo a registrar en la aplicación.
+ * @file Module.h
+ * @author Ian
+ * */
+
 using namespace std;
 
+/**
+ * Tipos disponibles de módulos.
+ * DATA: Manejan información de la base de datos.
+ * INFO: Controlan el flujo de datos de dicha información.
+ */
 enum class ModuleType {
     DATA,
     INFO
@@ -47,39 +58,72 @@ public:
     void printInfo();
 };
 
+/**
+ * Constructor de la clase.
+ * @param name Nombre del módulo.
+ * @param type Tipo del módulo.
+ */
 Module::Module(string name, ModuleType type) {
     this->name = name;
     this->type = type;
     start();
 }
 
+/**
+ * Obtiene el nombre del módulo.
+ * @return Nombre del módulo.
+ */
 string Module::getName() {
     return this->name;
 }
 
+/**
+ * Método disponible en todos los módulos que se ejecuta al inciar.
+ */
 void Module::start() {
     setStarted(true);
     cout << "Módulo " << getName() << " ha iniciado." << endl;
 }
 
+/**
+ * Método que finaliza el módulo.
+ */
 void Module::end() {
     setStarted(false);
     cout << "Módulo " << getName() << " se ha cerrado!" << endl;
     delete[] this;
 }
 
+/**
+ * Método de ayuda que imprime información del módulo.
+ */
 void Module::printInfo() {
-    cout << "Módulo\nNombre: " << getName() << endl;
+    cout << "Módulo:" << endl;
+    cout << "Nombre: " << getName() << endl;
+    cout << "Iniciado: " << isStarted() << endl;
+
 }
 
+/**
+ * Obtiene el estatus del módulo.
+ * @return Si el módulo está iniciado o no.
+ */
 bool Module::isStarted() {
     return this->started;
 }
 
+/**
+ * Asigna el estatus del módulo.
+ * @param started El módulo está iniciado o no.
+ */
 void Module::setStarted(bool started) {
     this->started = started;
 }
 
+/*+
+ * Obtiene el tipo de módulo.
+ * @return Tipo de módulo.
+ */
 ModuleType Module::getType() {
     return this->type;
 }
