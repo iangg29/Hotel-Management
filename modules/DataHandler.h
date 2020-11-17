@@ -31,6 +31,8 @@ private:
     ModuleType type;
 public:
     DataHandler(string, ModuleType);
+
+    void loadSampleData();
 };
 
 /**
@@ -41,6 +43,13 @@ public:
 DataHandler::DataHandler(string name, ModuleType type) : Module(name, type) {
     this->name = name;
     this->type = type;
+}
+
+/**
+ * Carga ejemplos para la aplicación.
+ */
+void DataHandler::loadSampleData() {
+    // TODO: Load sample data.
 }
 
 

@@ -40,6 +40,14 @@ protected:
     ModuleType type;
     bool started;
 
+    void log(string);
+
+    void logWarn(string);
+
+    void logError(string);
+
+    void log(string, string);
+
 public:
     Module(string, ModuleType);
 
@@ -126,6 +134,22 @@ void Module::setStarted(bool started) {
  */
 ModuleType Module::getType() {
     return this->type;
+}
+
+void Module::log(string message) {
+    cout << "[i] " << message << endl;
+}
+
+void Module::logWarn(string message) {
+    cout << "[WARNING] " << message << endl;
+}
+
+void Module::logError(string message) {
+    cout << "[ERROR] " << message << endl;
+}
+
+void Module::log(string prefix, string message) {
+    cout << "[" << prefix << "] " << message << endl;
 }
 
 

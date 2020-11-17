@@ -28,6 +28,7 @@ using namespace std;
 class Utilities : public Module {
 public:
     Utilities(string, ModuleType);
+    void log(string);
 };
 
 /**

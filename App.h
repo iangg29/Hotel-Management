@@ -16,6 +16,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <chrono>
 #include "modules/DataHandler.h"
 #include "modules/Utilities.h"
 
@@ -36,6 +37,8 @@ private:
     float version;
     vector<Module> modules;
     DataHandler dataHandler;
+    unsigned int startTime;
+    unsigned int finishTime;
 
     void menu();
 
@@ -135,6 +138,8 @@ void App::setStarted(bool started) {
  */
 void App::start() {
     if (!isStarted()) {
+        startTime = std::chrono::duration_cast<std::chrono::milliseconds>(
+                std::chrono::system_clock::now().time_since_epoch()).count();
         // TODO: Start handle.
         setStarted(true);
         if (isDebug()) cout << "Loading modules..." << endl;
@@ -142,6 +147,9 @@ void App::start() {
         addModule(utilities);
         // TODO: Complete modules.
         cout << "La aplicación ha iniciado correctamente." << endl;
+        finishTime = std::chrono::duration_cast<std::chrono::milliseconds>(
+                std::chrono::system_clock::now().time_since_epoch()).count();
+        cout << "Aplicación iniciada en [" << (finishTime - startTime) << "]ms." << endl;
         launchConsole();
     } else {
         cout << "La aplicación ya ha sido iniciada!" << endl;
