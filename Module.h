@@ -41,7 +41,7 @@ protected:
     bool started;
 
 public:
-    Module(string name, ModuleType type);
+    Module(string, ModuleType);
 
     string getName();
 
@@ -49,7 +49,7 @@ public:
 
     bool isStarted();
 
-    void setStarted(bool started);
+    void setStarted(bool);
 
     virtual void start();
 

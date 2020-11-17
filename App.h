@@ -16,7 +16,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "modules/MySQL.h"
+#include "modules/DataHandler.h"
 #include "modules/Utilities.h"
 
 /*
@@ -35,12 +35,12 @@ private:
     bool started;
     float version;
     vector<Module> modules;
-    MySQL mySQL;
+    DataHandler dataHandler;
 
     void menu();
 
 public:
-    App(string name, bool debug, float version);
+    App(string, bool, float);
 
     string getName();
 
@@ -48,7 +48,7 @@ public:
 
     float getVersion();
 
-    MySQL getMongoDB();
+    DataHandler getSQL();
 
     vector<Module> getModules();
 
@@ -56,7 +56,7 @@ public:
 
     bool isStarted();
 
-    void setStarted(bool started);
+    void setStarted(bool);
 
     void addModule(Module &module);
 
@@ -73,13 +73,13 @@ public:
  * @param debug Modo debug.
  * @param version Versión de la aplicación.
  */
-App::App(string name, bool debug, float version) : mySQL("MySQL Manager", ModuleType::DATA) {
+App::App(string name, bool debug, float version) : dataHandler("DataHandler Manager", ModuleType::DATA) {
     this->name = name;
     this->debug = debug;
     this->version = version;
     this->author = "Ian García";
     this->started = false;
-    addModule(mySQL);
+    addModule(dataHandler);
 }
 
 /**
@@ -211,14 +211,6 @@ void App::menu() {
     cout << "2. Reservaciones confirmadas" << endl;
     cout << "3. Habitaciones disponibles" << endl;
     cout << "4. Salir" << endl;
-}
-
-/**
- * Obtiene el módulo principal para la base de datos.
- * @return Módulo SQL.
- */
-MySQL App::getMongoDB() {
-    return this->mySQL;
 }
 
 

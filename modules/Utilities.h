@@ -27,7 +27,7 @@ using namespace std;
 
 class Utilities : public Module {
 public:
-    Utilities(string name, ModuleType type);
+    Utilities(string, ModuleType);
 };
 
 /**
