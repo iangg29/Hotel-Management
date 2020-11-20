@@ -136,18 +136,35 @@ ModuleType Module::getType() {
     return this->type;
 }
 
+/**
+ * Imprime mensaje en la consola con prefijo.
+ * @param message Mensaje a imprimir.
+ */
 void Module::log(string message) {
     cout << "[i] " << message << endl;
 }
 
+/**
+ * Imprime mensaje en la consola con prefijo.
+ * @param message Mensaje a imprimir.
+ */
 void Module::logWarn(string message) {
     cout << "[WARNING] " << message << endl;
 }
 
+/**
+ * Imprime mensaje en la consola con prefijo.
+ * @param message Mensaje a imprimir.
+ */
 void Module::logError(string message) {
     cout << "[ERROR] " << message << endl;
 }
 
+/**
+ * Imprime mensaje en la consola con prefijo definido.
+ * @param prefix Prefijo.
+ * @param message Mensaje.
+ */
 void Module::log(string prefix, string message) {
     cout << "[" << prefix << "] " << message << endl;
 }

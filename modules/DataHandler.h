@@ -71,10 +71,19 @@ void DataHandler::loadSampleData() {
     this->guests.push_back(valentina);
 }
 
+/**
+ * Obtiene los huéspedes registrados en la aplicación.
+ * @return Guests.
+ */
 vector<Guest> DataHandler::getGuests() {
     return this->guests;
 }
 
+/**
+ * Busca al huésped en los registros de la aplicación.
+ * @param guestName Guest name
+ * @return Guest
+ */
 Guest DataHandler::searchGuest(string guestName) {
     for (Guest guest : getGuests()) {
         if (guest.getName().find(guestName)) {
@@ -83,6 +92,10 @@ Guest DataHandler::searchGuest(string guestName) {
     }
 }
 
+/**
+ * Agrega al huesped al registro de la aplicación.
+ * @param guest Huesped.
+ */
 void DataHandler::addGuest(Guest &guest) {
     getGuests().push_back(guest);
     cout << "El usuario ha sido añadido con éxito!" << endl;
