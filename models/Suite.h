@@ -17,57 +17,102 @@
 #include "../Module.h"
 #include "Guest.h"
 
+/*
+ * Suite: Clase para definir el modelo de cada suite.
+ * @file Suite.h
+ * @author Ian
+ * */
+
+using namespace std;
+
 class Suite {
 private:
-    string name;
-    int beds;
+    int suiteNumber;
     bool available;
-    int maxGuests;
+    Guest guest;
 
 public:
     Suite();
 
-    Suite(string, int);
-
-    string getName();
-
-    int getBeds();
+    void setSuiteNumber(int);
 
     bool isAvailable();
 
-    int getMaxGuests();
+    string getGuestName();
 
-    void book();
+    int getSuiteNumber();
+
+    void setAvailable();
+
+    void checkInGuest(Guest);
+
+    void display();
 };
 
+/**
+ * Constructor de la clase Suite
+ */
 Suite::Suite() {
-    this->name = "";
-    this->beds = 0;
-    this->available = false;
-    this->maxGuests = 0;
+    this->available = true;
 }
 
-Suite::Suite(string name, int beds) {
-    this->name = name;
-    this->beds = beds;
-    this->available = false;
-    this->maxGuests = 0;
+/*+
+ * Asigna el número de suite al objeto.
+ * @param suiteNumber Número a asignar.
+ */
+void Suite::setSuiteNumber(int suiteNumber) {
+    this->suiteNumber = suiteNumber;
 }
 
-string Suite::getName() {
-    return this->name;
+/**
+ * Obtiene el número de suite del hotel.
+ * @return Número de suite.
+ */
+int Suite::getSuiteNumber() {
+    return this->suiteNumber;
 }
 
-int Suite::getBeds() {
-    return this->beds;
-}
-
+/*+
+ * Revisa si la suite está disponible.
+ * @return La suite no está ocupada.
+ */
 bool Suite::isAvailable() {
     return this->available;
 }
 
-int Suite::getMaxGuests() {
-    return this->maxGuests;
+/**
+ * Obtiene el nombre del huesped de la habitación.
+ * @return Nombre del huesped.
+ */
+string Suite::getGuestName() {
+    return this->guest.getName();
+}
+
+/**
+ * Asigna la suite como disponible.
+ */
+void Suite::setAvailable() {
+    this->available = true;
+}
+
+/**
+ * Asigna la suite a un huesped previamente ya registrado.
+ * @param guest Objeto del huesped a asignar.
+ */
+void Suite::checkInGuest(Guest guest) {
+    this->available = false;
+    this->guest = guest;
+}
+
+/**
+ * Imprime información relevante de la suite.
+ */
+void Suite::display() {
+    if (isAvailable()) {
+        cout << "La suite #" << getSuiteNumber() << " está disponible." << endl;
+    } else {
+        cout << "La suite #" << getSuiteNumber() << " está actualmente ocupada por " << getGuestName() << endl;
+    }
 }
 
 
