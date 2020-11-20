@@ -16,6 +16,7 @@
 #include <iostream>
 #include <string>
 #include "../Module.h"
+#include "../models/Guest.h"
 
 /*
  * DataHandler: Módulo donde se administra todas las solicitudes a la base de datos SQL.
@@ -29,10 +30,17 @@ class DataHandler : public Module {
 private:
     string name;
     ModuleType type;
+    vector<Guest> guests;
 public:
     DataHandler(string, ModuleType);
 
     void loadSampleData();
+
+    vector<Guest> getGuests();
+
+    void addGuest(Guest &guest);
+
+    Guest searchGuest(string);
 };
 
 /**
@@ -47,9 +55,37 @@ DataHandler::DataHandler(string name, ModuleType type) : Module(name, type) {
 
 /**
  * Carga ejemplos para la aplicación.
+ * @return Vector con huéspedes prueba.
  */
 void DataHandler::loadSampleData() {
-    // TODO: Load sample data.
+    Guest ian("Ian García", 18, Gender::MALE, 4423637690);
+    Guest diego("Diego", 20, Gender::MALE, 442776690);
+    Guest andrea("Andrea", 19, Gender::FEMALE, 442456821);
+    Guest daniel("Daniel", 18, Gender::MALE, 4421869432);
+    Guest valentina("Valentina", 18, Gender::MALE, 4427564871);
+
+    this->guests.push_back(ian);
+    this->guests.push_back(diego);
+    this->guests.push_back(andrea);
+    this->guests.push_back(daniel);
+    this->guests.push_back(valentina);
+}
+
+vector<Guest> DataHandler::getGuests() {
+    return this->guests;
+}
+
+Guest DataHandler::searchGuest(string guestName) {
+    for (Guest guest : getGuests()) {
+        if (guest.getName().find(guestName)) {
+            return guest;
+        }
+    }
+}
+
+void DataHandler::addGuest(Guest &guest) {
+    getGuests().push_back(guest);
+    cout << "El usuario ha sido añadido con éxito!" << endl;
 }
 
 

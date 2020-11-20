@@ -61,8 +61,8 @@ Hotel::Hotel(string name, int num_suites) {
     this->name = name;
     this->num_suites = num_suites;
     this->suites.resize(num_suites);
-    for (int i = 0; i < num_suites; ++i) {
-        // TODO: Increment index
+    for (int i = 0; i < num_suites; i++) {
+        suites[i].setSuiteNumber(i + 1);
     }
 }
 
@@ -87,7 +87,7 @@ int Hotel::getNumSuites() {
  * @return Número de suite.
  */
 int Hotel::next() {
-    for (int i = 0; i < this->num_suites; ++i) {
+    for (int i = 0; i < this->num_suites; i++) {
         if (suites[i].isAvailable()) {
             return i;
         }
@@ -126,7 +126,7 @@ bool Hotel::checkIn(Guest guest) {
  * @return Posible error o confirmación de la acción.
  */
 bool Hotel::checkOut(string name) {
-    for (int i = 0; i < num_suites; ++i) {
+    for (int i = 0; i < num_suites; i++) {
         if (suites[i].getGuestName() == name) {
             suites[i].setAvailable();
             return true;
@@ -150,7 +150,7 @@ bool Hotel::checkOut(Guest guest) {
  */
 void Hotel::display() {
     cout << "---- Hotel " << getName() << " ----" << endl;
-    for (int i = 0; i < num_suites; ++i) {
+    for (int i = 0; i < num_suites; i++) {
         suites[i].display();
     }
 }

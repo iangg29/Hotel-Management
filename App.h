@@ -19,6 +19,7 @@
 #include <chrono>
 #include "modules/DataHandler.h"
 #include "modules/Utilities.h"
+#include "models/Hotel.h"
 
 /*
  * App: Clase principal de la aplicación donde se manejan los módulos y controladores.
@@ -37,6 +38,7 @@ private:
     float version;
     vector<Module> modules;
     DataHandler dataHandler;
+    Hotel hotel = Hotel("Moon Palace", 20);
     unsigned int startTime;
     unsigned int finishTime;
 
@@ -51,7 +53,9 @@ public:
 
     float getVersion();
 
-    DataHandler getSQL();
+    DataHandler getDataHandler();
+
+    Hotel getHotel();
 
     vector<Module> getModules();
 
@@ -68,6 +72,7 @@ public:
     void end();
 
     void launchConsole();
+
 };
 
 /**
@@ -134,22 +139,37 @@ void App::setStarted(bool started) {
 }
 
 /**
+ * Obtiene el módulo que administra los datos del programa.
+ * @return Data handler module.
+ */
+DataHandler App::getDataHandler() {
+    return this->dataHandler;
+}
+
+/**
+ * Obtiene la instancia del hotel principal.
+ * @return Hotel.
+ */
+Hotel App::getHotel() {
+    return this->hotel;
+}
+
+/**
  * Método principal para iniciar la aplicación.
  */
 void App::start() {
     if (!isStarted()) {
         startTime = std::chrono::duration_cast<std::chrono::milliseconds>(
                 std::chrono::system_clock::now().time_since_epoch()).count();
-        // TODO: Start handle.
         setStarted(true);
         if (isDebug()) cout << "Loading modules..." << endl;
         Utilities utilities("Utilities Manager", ModuleType::INFO);
         addModule(utilities);
-        // TODO: Complete modules.
         cout << "La aplicación ha iniciado correctamente." << endl;
         finishTime = std::chrono::duration_cast<std::chrono::milliseconds>(
                 std::chrono::system_clock::now().time_since_epoch()).count();
         cout << "Aplicación iniciada en [" << (finishTime - startTime) << "]ms." << endl;
+
         launchConsole();
     } else {
         cout << "La aplicación ya ha sido iniciada!" << endl;
@@ -167,8 +187,9 @@ void App::end() {
         for (Module module : getModules()) {
             module.end();
         }
-        delete this;
         cout << "La aplicación se ha cerrado correctamente." << endl;
+        cout << "Gracias por utilizar esta aplicación." << endl;
+        delete this;
     }
 }
 
@@ -193,6 +214,11 @@ void App::addModule(Module &module) {
  */
 void App::launchConsole() {
     int opcion = 0;
+    Guest selected, newGuest;
+    string guestName, nombre, gender;
+    int age, phone;
+    Guest test("Test", 18, Gender::FEMALE, 442);
+    getDataHandler().addGuest(test);
     while (isStarted()) {
         menu();
         cout << "Por favor, escoje una opción: ";
@@ -200,8 +226,55 @@ void App::launchConsole() {
         switch (opcion) {
             case 1:
                 cout << "Estas a punto de hacer una reservación!" << endl;
+                cout << "Por favor ingresa el nombre de un huesped previamente registrado: ";
+                cin >> guestName;
+                selected = getDataHandler().searchGuest(guestName);
+                if (getHotel().checkIn(selected)) {
+                    cout << "Bienvenido a " << getHotel().getName() << ", " << selected.getName() << endl;
+                } else {
+                    cout << "Ha ocurrido un error al registrar al huesped." << endl;
+                }
+                break;
+            case 2:
+                cout << "Estas a punto de hacer checkout!" << endl;
+                cout << "Por favor ingresa el nombre del huesped: ";
+                cin >> guestName;
+                if (getHotel().checkOut(guestName)) {
+                    cout << "Hasta luego " << guestName << "." << endl;
+                }
+                break;
+            case 3:
+                cout << "Estas a punto de buscar un huesped!" << endl;
+                cout << "Por favor ingresa el nombre del huesped a buscar: ";
+                cin >> guestName;
+                getDataHandler().searchGuest(guestName).display();
                 break;
             case 4:
+                cout << "La información del hotel a la fecha es:" << endl;
+                getHotel().display();
+                break;
+            case 5:
+                cout << "La información del huéspedes a la fecha es:" << endl;
+                for (int i = 0; i < getDataHandler().getGuests().size(); ++i) {
+                    getDataHandler().getGuests()[i].display();
+                }
+                break;
+            case 6:
+                cout << "Estas a punto de registrar un nuevo huesped!" << endl;
+                cout << "Ingresa el nombre del huesped: ";
+                cin >> nombre;
+                cout << "Ingresa la edad del huesped: ";
+                cin >> age;
+                cout << "Ingresa el género del huésped (M, F, I): ";
+                cin >> gender;
+                cout << "Ingresa el celular del huésped: ";
+                cin >> phone;
+                newGuest = Guest(nombre, age,
+                                 (gender == "M" ? Gender::MALE : (gender == "F" ? Gender::FEMALE : Gender::UNDEFINED)),
+                                 phone);
+                getDataHandler().addGuest(newGuest);
+                break;
+            case 7:
                 end();
                 break;
             default:
@@ -215,10 +288,13 @@ void App::launchConsole() {
  * Método para mandar al usuario las opciones posibles dentro de la aplicación.
  */
 void App::menu() {
-    cout << "1. Hacer reservación" << endl;
-    cout << "2. Reservaciones confirmadas" << endl;
-    cout << "3. Habitaciones disponibles" << endl;
-    cout << "4. Salir" << endl;
+    cout << "1. CheckIn a huesped" << endl;
+    cout << "2. CheckOut a huesped" << endl;
+    cout << "3. Buscar huesped" << endl;
+    cout << "4. Información de suites." << endl;
+    cout << "5. Huespedes registrados." << endl;
+    cout << "6. Crea un nuevo registro para huesped." << endl;
+    cout << "7. Salir" << endl;
 }
 
 
