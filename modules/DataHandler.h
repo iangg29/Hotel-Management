@@ -31,6 +31,7 @@ private:
     string name;
     ModuleType type;
     vector<Guest> guests;
+
 public:
     DataHandler(string, ModuleType);
 
