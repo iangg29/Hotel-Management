@@ -12,9 +12,9 @@
 ![Language](https://img.shields.io/badge/Language-C++-blue)
 [![License](https://img.shields.io/badge/license-GNU-blue)](https://opensource.org/licenses/GPL-3.0)
 
-## Instalación
+## Acerca del proyecto
 
-### Dependencias
+Este programa fué hecho en C++ con el propósito de administrar los huéspedes de un hotel.
 
 ## License
 
