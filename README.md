@@ -4,9 +4,9 @@
 
 # Hotel Management
 ## Proyecto final
-### Versión 0.1
+### Versión 1.0
 #### Materia TC1033.9
-#### Entrega 01/Diciembre/2020
+#### Entrega 04/Diciembre/2020
 
 ![Version](https://img.shields.io/badge/Version-0.1-blue)
 ![Language](https://img.shields.io/badge/Language-C++-blue)
