@@ -44,7 +44,7 @@ public:
 
     void setAvailable();
 
-    void checkInGuest(Guest);
+    void checkInGuest(Guest &guest);
 
     void display();
 };
@@ -99,7 +99,7 @@ void Suite::setAvailable() {
  * Asigna la suite a un huesped previamente ya registrado.
  * @param guest Objeto del huesped a asignar.
  */
-void Suite::checkInGuest(Guest guest) {
+void Suite::checkInGuest(Guest &guest) {
     this->available = false;
     this->guest = guest;
 }

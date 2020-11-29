@@ -31,17 +31,16 @@ private:
     string name;
     ModuleType type;
     vector<Guest> guests;
-
 public:
     DataHandler(string, ModuleType);
-
-    void loadSampleData();
-
-    vector<Guest> getGuests();
 
     void addGuest(Guest &guest);
 
     Guest searchGuest(string);
+
+    void displayGuests();
+
+    void loadSampleData();
 };
 
 /**
@@ -65,41 +64,36 @@ void DataHandler::loadSampleData() {
     Guest daniel("Daniel", 18, Gender::MALE, 4421869432);
     Guest valentina("Valentina", 18, Gender::MALE, 4427564871);
 
-    this->guests.push_back(ian);
-    this->guests.push_back(diego);
-    this->guests.push_back(andrea);
-    this->guests.push_back(daniel);
-    this->guests.push_back(valentina);
+    addGuest(ian);
+    addGuest(diego);
+    addGuest(andrea);
+    addGuest(daniel);
+    addGuest(valentina);
 }
 
-/**
- * Obtiene los huéspedes registrados en la aplicación.
- * @return Guests.
- */
-vector<Guest> DataHandler::getGuests() {
-    return this->guests;
+void DataHandler::addGuest(Guest &guest) {
+    guests.push_back(guest);
+    cout << "Guest added! (" << guest.getName() << ")" << endl;
 }
 
-/**
- * Busca al huésped en los registros de la aplicación.
- * @param guestName Guest name
- * @return Guest
- */
-Guest DataHandler::searchGuest(string guestName) {
-    for (Guest guest : getGuests()) {
-        if (guest.getName().find(guestName)) {
+Guest DataHandler::searchGuest(string name) {
+    for (Guest guest : guests) {
+        if (guest.getName() == name) {
             return guest;
         }
     }
+    return Guest("NOT FOUND", -1, Gender::UNDEFINED, -1);
 }
 
-/**
- * Agrega al huesped al registro de la aplicación.
- * @param guest Huesped.
- */
-void DataHandler::addGuest(Guest &guest) {
-    getGuests().push_back(guest);
-    cout << "El usuario ha sido añadido con éxito!" << endl;
+void DataHandler::displayGuests() {
+    if (!guests.empty()) {
+        cout << "La información del huéspedes a la fecha es:" << endl;
+        for (Guest guest : guests) {
+            guest.display();
+        }
+    } else {
+        cout << "No se encontraron huéspedes registrados!" << endl;
+    }
 }
 
 

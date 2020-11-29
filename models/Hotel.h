@@ -43,9 +43,9 @@ public:
 
     bool hasFreeSuites();
 
-    bool checkIn(Guest);
+    bool checkIn(Guest &guest);
 
-    bool checkOut(Guest);
+    bool checkOut(Guest &guest);
 
     bool checkOut(string);
 
@@ -87,7 +87,7 @@ int Hotel::getNumSuites() {
  * @return Número de suite.
  */
 int Hotel::next() {
-    for (int i = 0; i < this->num_suites; i++) {
+    for (int i = 0; i < num_suites; i++) {
         if (suites[i].isAvailable()) {
             return i;
         }
@@ -108,7 +108,7 @@ bool Hotel::hasFreeSuites() {
  * @param guest Huesped.
  * @return Posible error o confirmación de la acción.
  */
-bool Hotel::checkIn(Guest guest) {
+bool Hotel::checkIn(Guest &guest) {
     int nextSuite = next();
     if (nextSuite >= 0) {
         suites[nextSuite].checkInGuest(guest);
@@ -141,7 +141,7 @@ bool Hotel::checkOut(string name) {
  * @param guest Objeto del huesped.
  * @return Posible error o confirmación de la acción.
  */
-bool Hotel::checkOut(Guest guest) {
+bool Hotel::checkOut(Guest &guest) {
     return checkOut(guest.getName());
 }
 

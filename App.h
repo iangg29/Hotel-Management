@@ -37,8 +37,8 @@ private:
     bool started;
     float version;
     vector<Module> modules;
-    DataHandler dataHandler;
-    Hotel hotel = Hotel("Moon Palace", 20);
+    DataHandler dataHandler = DataHandler("DataHandler Manager", ModuleType::DATA);
+    Hotel hotel = Hotel("Moon Palace", 10);
     unsigned int startTime;
     unsigned int finishTime;
 
@@ -72,7 +72,6 @@ public:
     void end();
 
     void launchConsole();
-
 };
 
 /**
@@ -81,7 +80,7 @@ public:
  * @param debug Modo debug.
  * @param version Versión de la aplicación.
  */
-App::App(string name, bool debug, float version) : dataHandler("DataHandler Manager", ModuleType::DATA) {
+App::App(string name, bool debug, float version) {
     this->name = name;
     this->debug = debug;
     this->version = version;
@@ -217,8 +216,7 @@ void App::launchConsole() {
     Guest selected, newGuest;
     string guestName, nombre, gender;
     int age, phone;
-    Guest test("Test", 18, Gender::FEMALE, 442);
-    getDataHandler().addGuest(test);
+    dataHandler.loadSampleData();
     while (isStarted()) {
         menu();
         cout << "Por favor, escoje una opción: ";
@@ -228,18 +226,22 @@ void App::launchConsole() {
                 cout << "Estas a punto de hacer una reservación!" << endl;
                 cout << "Por favor ingresa el nombre de un huesped previamente registrado: ";
                 cin >> guestName;
-                selected = getDataHandler().searchGuest(guestName);
-                if (getHotel().checkIn(selected)) {
-                    cout << "Bienvenido a " << getHotel().getName() << ", " << selected.getName() << endl;
+                selected = dataHandler.searchGuest(guestName);
+                if (selected.getAge() != -1) {
+                    if (hotel.checkIn(selected)) {
+                        cout << "Bienvenido a " << hotel.getName() << ", " << selected.getName() << endl;
+                    } else {
+                        cout << "Ha ocurrido un error al registrar al huesped." << endl;
+                    }
                 } else {
-                    cout << "Ha ocurrido un error al registrar al huesped." << endl;
+                    cout << "No se ha podido encontrar al huésped \"" << guestName << "\"." << endl;
                 }
                 break;
             case 2:
                 cout << "Estas a punto de hacer checkout!" << endl;
                 cout << "Por favor ingresa el nombre del huesped: ";
                 cin >> guestName;
-                if (getHotel().checkOut(guestName)) {
+                if (hotel.checkOut(guestName)) {
                     cout << "Hasta luego " << guestName << "." << endl;
                 }
                 break;
@@ -247,17 +249,14 @@ void App::launchConsole() {
                 cout << "Estas a punto de buscar un huesped!" << endl;
                 cout << "Por favor ingresa el nombre del huesped a buscar: ";
                 cin >> guestName;
-                getDataHandler().searchGuest(guestName).display();
+                dataHandler.searchGuest(guestName).display();
                 break;
             case 4:
                 cout << "La información del hotel a la fecha es:" << endl;
-                getHotel().display();
+                hotel.display();
                 break;
             case 5:
-                cout << "La información del huéspedes a la fecha es:" << endl;
-                for (int i = 0; i < getDataHandler().getGuests().size(); ++i) {
-                    getDataHandler().getGuests()[i].display();
-                }
+                dataHandler.displayGuests();
                 break;
             case 6:
                 cout << "Estas a punto de registrar un nuevo huesped!" << endl;
@@ -272,7 +271,7 @@ void App::launchConsole() {
                 newGuest = Guest(nombre, age,
                                  (gender == "M" ? Gender::MALE : (gender == "F" ? Gender::FEMALE : Gender::UNDEFINED)),
                                  phone);
-                getDataHandler().addGuest(newGuest);
+                dataHandler.addGuest(newGuest);
                 break;
             case 7:
                 end();

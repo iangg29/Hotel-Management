@@ -41,12 +41,12 @@ private:
     string name;
     int age;
     Gender gender;
-    int phone;
+    long phone;
 
 public:
     Guest();
 
-    Guest(string, int, Gender, int);
+    Guest(string, int, Gender, long);
 
     string getName();
 
@@ -54,7 +54,7 @@ public:
 
     Gender getGender();
 
-    int getPhone();
+    long getPhone();
 
     void setName(string);
 
@@ -62,7 +62,7 @@ public:
 
     void setGender(Gender);
 
-    void setPhone(int);
+    void setPhone(long);
 
     void display();
 };
@@ -84,7 +84,7 @@ Guest::Guest() {
  * @param gender Género del huesped.
  * @param phone Celular del huesped.
  */
-Guest::Guest(string name, int age, Gender gender, int phone) {
+Guest::Guest(string name, int age, Gender gender, long phone) {
     this->name = name;
     this->age = age;
     this->gender = gender;
@@ -119,7 +119,7 @@ Gender Guest::getGender() {
  * Obtiene el celular del huesped.
  * @return Celular.
  */
-int Guest::getPhone() {
+long Guest::getPhone() {
     return this->phone;
 }
 
@@ -151,7 +151,7 @@ void Guest::setGender(Gender gender) {
  * Asigna el celular del huesped al objeto.
  * @param phone Celular del huesped.
  */
-void Guest::setPhone(int phone) {
+void Guest::setPhone(long phone) {
     this->phone = phone;
 }
 

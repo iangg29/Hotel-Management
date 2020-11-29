@@ -40,13 +40,13 @@ protected:
     ModuleType type;
     bool started;
 
-    void log(string);
+    virtual void log(string);
 
-    void logWarn(string);
+    virtual void logWarn(string);
 
-    void logError(string);
+    virtual void logError(string);
 
-    void log(string, string);
+    virtual void log(string, string);
 
 public:
     Module(string, ModuleType);
