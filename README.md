@@ -4,7 +4,7 @@
 
 # Hotel Management
 ## Proyecto final
-### Versión 1.0
+### Versión 1.0.1
 #### Materia TC1033.9
 #### Entrega 04/Diciembre/2020
 
