@@ -8,7 +8,7 @@
 #### Materia TC1033.9
 #### Entrega 04/Diciembre/2020
 
-![Version](https://img.shields.io/badge/Version-0.1-blue)
+![Version](https://img.shields.io/badge/Version-1.0.1-blue)
 ![Language](https://img.shields.io/badge/Language-C++-blue)
 [![License](https://img.shields.io/badge/license-GNU-blue)](https://opensource.org/licenses/GPL-3.0)
 
