@@ -128,6 +128,7 @@ bool Hotel::checkIn(Guest &guest) {
 bool Hotel::checkOut(string name) {
     for (int i = 0; i < num_suites; i++) {
         if (suites[i].getGuestName() == name) {
+            cout << "La suite #" << suites[i].getSuiteNumber() << " ha sido desocupada!" << endl;
             suites[i].setAvailable();
             return true;
         }
@@ -149,6 +150,7 @@ bool Hotel::checkOut(Guest &guest) {
  * Imprime información relevante del hotel.
  */
 void Hotel::display() {
+    cout << "La información del hotel a la fecha es:" << endl;
     cout << "---- Hotel " << getName() << " ----" << endl;
     for (int i = 0; i < num_suites; i++) {
         suites[i].display();

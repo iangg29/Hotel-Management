@@ -54,11 +54,10 @@ DataHandler::DataHandler(string name, ModuleType type) : Module(name, type) {
 }
 
 /**
- * Carga ejemplos para la aplicación.
- * @return Vector con huéspedes prueba.
+ * Carga ejemplos de huéspedes para la aplicación.
  */
 void DataHandler::loadSampleData() {
-    Guest ian("Ian García", 18, Gender::MALE, 4423637690);
+    Guest ian("Ian", 18, Gender::MALE, 4423637690);
     Guest diego("Diego", 20, Gender::MALE, 442776690);
     Guest andrea("Andrea", 19, Gender::FEMALE, 442456821);
     Guest daniel("Daniel", 18, Gender::MALE, 4421869432);
@@ -71,11 +70,20 @@ void DataHandler::loadSampleData() {
     addGuest(valentina);
 }
 
+/**
+ * Agrega un huesped a la lista.
+ * @param guest Huesped a agregar.
+ */
 void DataHandler::addGuest(Guest &guest) {
     guests.push_back(guest);
     cout << "Guest added! (" << guest.getName() << ")" << endl;
 }
 
+/**
+ * Busca huesped en los registros.
+ * @param name Nombre del huesped a buscar.
+ * @return Objeto del huesped en cuestión.
+ */
 Guest DataHandler::searchGuest(string name) {
     for (Guest guest : guests) {
         if (guest.getName() == name) {
@@ -85,6 +93,9 @@ Guest DataHandler::searchGuest(string name) {
     return Guest("NOT FOUND", -1, Gender::UNDEFINED, -1);
 }
 
+/**
+ * Imprime información de todos los huéspedes registrados a la fecha.
+ */
 void DataHandler::displayGuests() {
     if (!guests.empty()) {
         cout << "La información del huéspedes a la fecha es:" << endl;

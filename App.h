@@ -188,7 +188,6 @@ void App::end() {
         }
         cout << "La aplicación se ha cerrado correctamente." << endl;
         cout << "Gracias por utilizar esta aplicación." << endl;
-        delete this;
     }
 }
 
@@ -230,11 +229,14 @@ void App::launchConsole() {
                 if (selected.getAge() != -1) {
                     if (hotel.checkIn(selected)) {
                         cout << "Bienvenido a " << hotel.getName() << ", " << selected.getName() << endl;
+                        cout << "Disfruta tu estancia en " << hotel.getName() << "!" << endl;
                     } else {
                         cout << "Ha ocurrido un error al registrar al huesped." << endl;
+                        cout << "Intenta de nuevo por favor." << endl;
                     }
                 } else {
                     cout << "No se ha podido encontrar al huésped \"" << guestName << "\"." << endl;
+                    cout << "Intenta de nuevo por favor." << endl;
                 }
                 break;
             case 2:
@@ -249,10 +251,12 @@ void App::launchConsole() {
                 cout << "Estas a punto de buscar un huesped!" << endl;
                 cout << "Por favor ingresa el nombre del huesped a buscar: ";
                 cin >> guestName;
-                dataHandler.searchGuest(guestName).display();
+                selected = dataHandler.searchGuest(guestName);
+                if (selected.getAge() != -1) {
+                    selected.display();
+                }
                 break;
             case 4:
-                cout << "La información del hotel a la fecha es:" << endl;
                 hotel.display();
                 break;
             case 5:

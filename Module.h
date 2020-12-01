@@ -99,7 +99,6 @@ void Module::start() {
 void Module::end() {
     setStarted(false);
     cout << "Módulo " << getName() << " se ha cerrado!" << endl;
-    delete[] this;
 }
 
 /**
