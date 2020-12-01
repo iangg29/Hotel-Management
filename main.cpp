@@ -17,7 +17,7 @@
  *  Crea la instancia principal y la inicia.
  * */
 int main() {
-    App app("Hotel Management System", true, 1.0);
+    App app("Hotel Management System", true, 1.1);
     app.start();
     return 0;
 }

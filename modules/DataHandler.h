@@ -76,7 +76,6 @@ void DataHandler::loadSampleData() {
  */
 void DataHandler::addGuest(Guest &guest) {
     guests.push_back(guest);
-    cout << "Guest added! (" << guest.getName() << ")" << endl;
 }
 
 /**
