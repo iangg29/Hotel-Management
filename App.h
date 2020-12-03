@@ -220,6 +220,12 @@ void App::launchConsole() {
         menu();
         cout << "Por favor, escoje una opción: ";
         cin >> opcion;
+        while (cin.fail()){
+            cin.clear();
+            cin.ignore();
+            cout << "Por favor, escoje una opción: ";
+            cin >> opcion;
+        }
         switch (opcion) {
             case 1:
                 cout << "Estas a punto de hacer una reservación!" << endl;
@@ -254,6 +260,9 @@ void App::launchConsole() {
                 selected = dataHandler.searchGuest(guestName);
                 if (selected.getAge() != -1) {
                     selected.display();
+                } else {
+                    cout << "No se ha podido encontrar al huésped \"" << guestName << "\"." << endl;
+                    cout << "Intenta de nuevo por favor." << endl;
                 }
                 break;
             case 4:
