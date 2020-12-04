@@ -30,7 +30,7 @@ poder obtener información relevante de cada huésped en caso de ser necesario.
 El sistema solo podrá ser ejecutado en la consola (shell).
 El sistema es compatible con todos los SO.
 
-> Compilar: "g++ main.cpp App.h Module.h modules/DataHandler.h modules/Utilities.h models/Suite.h models/Guest.h models/Hotel.h"
+> Compilar: "g++ main.cpp"
 
 > Ejecutar (linux/macOS): "/a.out"
 
